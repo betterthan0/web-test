@@ -1,10 +1,4 @@
-FROM debian:buster
+FROM nginx
 
+COPY index.html /usr/share/nginx/html
 
-RUN apt-get update && apt-get install nginx -y
-
-
-COPY /home/ubuntu/web-test/index.html /var/www/html
-
-
-CMD ["nginx","-g","daemon off;"]
