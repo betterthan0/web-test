@@ -12,9 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands using password
+      if: "!contains(github.event.head_commit.message, 'deploy')"
       uses: appleboy/ssh-action@master
       with:
-        host: "3.66.28.74"
+        host: "18.197.18.128"
         username: "ubuntu"
         key: ${{ secrets.web_key }}
         port: "22"
