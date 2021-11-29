@@ -10,7 +10,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, 'deploy')
     steps:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
@@ -19,6 +18,8 @@ jobs:
         username: "ubuntu"
         key: ${{ secrets.web_key }}
         port: "22"
+        if: contains(github.event.head_commit.message, 'deploy')
+        run: |
         script: |
           cd /home/ubuntu/web-test
           git pull
