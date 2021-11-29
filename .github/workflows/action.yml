@@ -22,8 +22,6 @@ jobs:
         script: |
           cd /home/ubuntu/web-test
           git pull
-          if: "contains(github.event.head_commit.message, 'deploy')" 
-          run: |
           sudo docker-compose down
           sudo docker-compose up --force-recreate --build -d
       
