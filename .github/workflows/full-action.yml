@@ -39,6 +39,6 @@ jobs:
           username: "ubuntu"
           key: ${{ secrets.web_key }}
           port: "22"
-          run: |
+          script: |
             sudo docker run -d --name web -p 9999:80 pooche/pooche-web:latest
             
