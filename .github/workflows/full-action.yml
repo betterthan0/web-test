@@ -26,9 +26,7 @@ jobs:
         run: docker build -t pooche-web .
       - name: Tags
         run: |
-          docker tag pooche-web ${{ secrets.DOCKER_USER }}/pooche-web:${{ github.sha }}
-          docker tag pooche-web ${{ secrets.DOCKER_USER }}/pooche-web:latest
+          docker tag pooche-web ${{ secrets.DOCKER_USER }}/pooche-web:test
       - name: Push
         run: |
-          docker push ${{ secrets.DOCKER_USER }}/pooche-web:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USER }}/pooche-web:latest
+          docker push ${{ secrets.DOCKER_USER }}/pooche-web:test
