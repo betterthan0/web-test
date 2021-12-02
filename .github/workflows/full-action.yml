@@ -41,5 +41,5 @@ jobs:
           port: "22"
           script: |
             sudo docker stop web && sudo docker rm web
-            sudo docker run -d --name web -p 9999:80 pooche/pooche-web:latest
+            sudo docker run -d --name web -p 9999:80 pooche/pooche-web:${{ github.sha }}
             
