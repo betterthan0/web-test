@@ -40,5 +40,6 @@ jobs:
           key: ${{ secrets.web_key }}
           port: "22"
           script: |
+            docker stop web && docker rm web
             sudo docker run -d --name web -p 9999:80 pooche/pooche-web:latest
             
