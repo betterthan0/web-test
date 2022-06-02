@@ -1,0 +1,45 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+    - master
+    
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v1
+      - name: ls
+        run: |
+          ls
+  cd:
+    runs-on: ubuntu-latest
+    needs: ci
+    
+    steps:
+      - uses: actions/checkout@v1
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
+      - name: build image
+        run: docker build -t pooche-web .
+      - name: Tags
+        run: |
+          docker tag pooche-web ${{ secrets.DOCKER_USER }}/pooche-web:v0.${{ github.run_number }}
+          docker tag pooche-web ${{ secrets.DOCKER_USER }}/pooche-web:latest
+      - name: Push
+        run: |
+          docker push ${{ secrets.DOCKER_USER }}/pooche-web:v0.${{ github.run_number }}
+          docker push ${{ secrets.DOCKER_USER }}/pooche-web:latest
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: "18.197.18.128"
+          username: "ubuntu"
+          key: ${{ secrets.web_key }}
+          port: "22"
+          script: |
+            sudo docker stop web && sudo docker rm web
+            sudo docker run -d --name web -p 9999:80 pooche/pooche-web:v0.${{ github.run_number }}
+            
