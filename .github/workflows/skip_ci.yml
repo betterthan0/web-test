@@ -1,0 +1,12 @@
+name: CD category predictor
+on:
+  push:
+    branches: 
+      - master
+jobs:
+  build:
+    if: contains(github.event.commits.message, '[build ami category]') || contains(github.event.commits.message, '[build all ami]') || contains(github.event.commits.message, '[build all]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull from github
+        run: echo "done"
