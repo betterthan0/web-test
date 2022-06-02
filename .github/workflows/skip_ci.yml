@@ -5,7 +5,7 @@ on:
       - master
 jobs:
   build:
-    if: contains(github.event.commits.message, '[build ami category]') || contains(github.event.commits.message, '[build all ami]') || contains(github.event.commits.message, '[build all]')
+    if: "startsWith(github.event.head_commit.message, 'build ami')"
     runs-on: ubuntu-latest
     steps:
       - name: pull from github
