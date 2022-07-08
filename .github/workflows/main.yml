@@ -1,4 +1,4 @@
-name: CD  lambdas
+name: CD lambdas
 on:
   push:
     branches:
