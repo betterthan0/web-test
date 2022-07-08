@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  deploy lambda
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  ProducerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub
+        - '${Stack_Name}-producer-runner'
+        - Stack_Name: !Ref "AWS::StackName"
+      Description: "this lambda runs '${Stack_Name}' producers"
+      Environment:
+        Variables:
+          test: "test"
+      CodeUri: lambda_functions/
+      Handler: producer.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - x86_64
+      Events:
+        ScheduledFunction:
+           Type: Schedule
+           Properties:
+             Schedule: cron(0 00 ? * * *)

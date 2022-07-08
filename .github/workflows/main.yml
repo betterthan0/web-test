@@ -1,0 +1,43 @@
+name: CD  lambdas
+on:
+  push:
+    branches:
+      - main
+      - develop
+      
+jobs:
+  build-deploy:
+    if: startsWith(github.event.head_commit.message, '[build lambda]') || startsWith(github.event.head_commit.message, '[build all]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel
+      - uses: aws-actions/setup-sam@v1
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+      # sam build 
+      - name: build PRODUCTION
+        if: github.ref == 'refs/heads/main'
+        run: sam build --use-container --template-file ./template.yaml
+        
+      - name: build DEVELOP
+        if: github.ref == 'refs/heads/develop'
+        run: sam build --use-container --template-file ./template.yaml
+
+# sam deploy
+      - name: deploy PRODUCTION
+        if: github.ref == 'refs/heads/main'
+        run: sam deploy --capabilities CAPABILITY_IAM --no-confirm-changeset --no-fail-on-empty-changeset --stack-name ${{ secrets.STACK_NAME_PROD }} --s3-bucket ${{ secrets.AWS_S3_BUCKET }} --config-file ./samconfig.toml
+
+      - name: deploy DEVELOP
+        if: github.ref == 'refs/heads/develop'
+        run: sam deploy --capabilities CAPABILITY_IAM --no-confirm-changeset --no-fail-on-empty-changeset --stack-name ${{ secrets.STACK_NAME_DEV }} --s3-bucket ${{ secrets.AWS_S3_BUCKET }} --config-file ./samconfig.toml

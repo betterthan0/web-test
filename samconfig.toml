@@ -1,0 +1,11 @@
+version = 0.1
+[develop]
+[develop.deploy]
+[develop.deploy.parameters]
+stack_name = "dropship-scraping-develop"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-5yh6e98yptm4"
+s3_prefix = "dropship-scraping-develop"
+region = "eu-central-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
