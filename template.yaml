@@ -7,9 +7,12 @@ Globals:
     Timeout: 3
 
 Parameters:
-  Stage:
+  MyEnvironment:
     Type: String
     Default: develop
+    AllowedValues:
+      - develop
+      - production
 
 Resources:
   ProducerFunction:
@@ -19,8 +22,8 @@ Resources:
         - '${Stack_Name}-producer-runner'
         - Stack_Name: !Ref "AWS::StackName"
       Description: !Sub
-        - '${Stage_Name}-lambda to manage producers'
-        - Stage_Name: !Ref Stage
+        - '${Env_Name}-lambda to manage producers'
+        - Env_Name: !Ref MyEnvironment
       Environment:
         Variables:
           test: "test"
