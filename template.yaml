@@ -13,7 +13,7 @@ Resources:
       FunctionName: !Sub
         - '${Stack_Name}-producer-runner'
         - Stack_Name: !Ref "AWS::StackName"
-      Description: "this lambda runs '${Stack_Name}' producers"
+      Description: "this lambda runs !ref 'AWS::StackName' producers"
       Environment:
         Variables:
           test: "test"

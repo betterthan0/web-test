@@ -9,3 +9,16 @@ region = "eu-central-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
+parameter_overrides = "Environment=dev"
+
+[production]
+[production.deploy]
+[production.deploy.parameters]
+stack_name = "dropship-scraping"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1p5g64dae2ukw"
+s3_prefix = "dropship-scraping"
+region = "eu-central-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+parameter_overrides = "Environment=prod"
