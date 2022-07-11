@@ -7,12 +7,12 @@ Globals:
     Timeout: 3
 
 Parameters:
-  MyEnvironment:
+  stage:
     Type: String
-    Default: develop
+    Default: dev
     AllowedValues:
-      - develop
-      - production
+      - dev
+      - prod
 
 Resources:
   ProducerFunction:
@@ -21,12 +21,10 @@ Resources:
       FunctionName: !Sub
         - '${Stack_Name}-producer-runner'
         - Stack_Name: !Ref "AWS::StackName"
-      Description: !Sub
-        - '${Env_Name}-lambda to manage producers'
-        - Env_Name: !Ref MyEnvironment
+      Description: ""
       Environment:
         Variables:
-          test: "test"
+          test: !Sub '{{resolve:ssm:/temp}}'
       CodeUri: lambda_functions/
       Handler: producer.lambda_handler
       Runtime: python3.9
