@@ -6,6 +6,11 @@ Globals:
   Function:
     Timeout: 3
 
+Parameters:
+  Stage:
+    Type: String
+    Default: develop
+
 Resources:
   ProducerFunction:
     Type: AWS::Serverless::Function
@@ -15,7 +20,7 @@ Resources:
         - Stack_Name: !Ref "AWS::StackName"
       Description: !Sub
         - '${Stage_Name}-lambda to manage producers'
-        - Stack_Name: !Ref "AWS::StackName"
+        - Stage_Name: !Ref Stage
       Environment:
         Variables:
           test: "test"
