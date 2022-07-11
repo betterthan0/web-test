@@ -24,7 +24,7 @@ Resources:
       Description: ""
       Environment:
         Variables:
-          test: !Sub '{{resolve:ssm:/temp}}'
+          test: !Sub '{{resolve:ssm:/test/${stage}}}'
       CodeUri: lambda_functions/
       Handler: producer.lambda_handler
       Runtime: python3.9
