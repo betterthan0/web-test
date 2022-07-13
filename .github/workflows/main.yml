@@ -40,4 +40,4 @@ jobs:
 
       - name: deploy DEVELOP
         if: github.ref == 'refs/heads/develop'
-        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name ${{ secrets.STACK_NAME_DEV }} --config-file ./samconfig.toml --config-env develop
+        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name ${{ secrets.STACK_NAME_DEV }} --config-file samconfig.toml --config-env develop --template-file template.yaml
