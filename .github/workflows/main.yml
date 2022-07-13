@@ -40,4 +40,4 @@ jobs:
 
       - name: deploy DEVELOP
         if: github.ref == 'refs/heads/develop'
-        run: sam deploy --capabilities CAPABILITY_IAM --no-confirm-changeset --no-fail-on-empty-changeset --stack-name ${{ secrets.STACK_NAME_DEV }} --s3-bucket ${{ secrets.AWS_S3_BUCKET }} --config-file ./samconfig.toml
+        run: sam deploy --no-fail-on-empty-changeset --stack-name ${{ secrets.STACK_NAME_DEV }} --config-file ./samconfig.toml --config-env develop
