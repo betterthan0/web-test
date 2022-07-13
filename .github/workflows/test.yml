@@ -1,0 +1,20 @@
+name: CD_lambdas
+on:
+  push:
+    branches:
+      - main
+      - develop
+      
+env:
+  dirname: '/home/ubuntu/test'
+
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel
+          echo "${{ env.dirname }}"
