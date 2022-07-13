@@ -16,7 +16,7 @@ Resources:
       Description: "this lambda runs '${Stack_Name}' producers"
       Environment:
         Variables:
-          test: "test"
+          test: !Sub '{{resolve:ssm:/test/${stage}}}'
       CodeUri: lambda_functions/
       Handler: producer.lambda_handler
       Runtime: python3.9
