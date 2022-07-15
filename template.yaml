@@ -25,39 +25,6 @@ Resources:
       Auth:
         ApiKeyRequired: true
 
-  ApiKey:
-    Type: AWS::ApiGateway::ApiKey
-    DependsOn: [ApiUsagePlan]
-    Properties:
-      Name: !Join ["", [{"Ref": "AWS::StackName"}, "-apikey"]]
-      Description: "CloudFormation API Key"
-      Enabled: true
-      GenerateDistinctId: false
-      Value: !Sub '{{resolve:ssm:/test/${stage}/API_KEY}}'
-      StageKeys:
-        - RestApiId: !Ref ApiDeploy
-          StageName: !Ref stage
-
-  ApiUsagePlan:
-    Type: "AWS::ApiGateway::UsagePlan"
-    DependsOn:
-      - ApiDeployStage
-    Properties:
-      ApiStages:
-        - ApiId: !Ref ApiDeployStage
-          Stage: !Ref stage
-      Description: !Join [" ", [{"Ref": "AWS::StackName"}, "usage plan"]]
-      UsagePlanName: !Join ["", [{"Ref": "AWS::StackName"}, "-usage-plan"]]
-
-  ApiUsagePlanKey:
-    Type: "AWS::ApiGateway::UsagePlanKey"
-    DependsOn:
-      - ApiDeploy
-    Properties:
-      KeyId: !Ref ApiKey
-      KeyType: API_KEY
-      UsagePlanId: !Ref ApiUsagePlan
-
   ProducerFunction:
     Type: AWS::Serverless::Function
     Properties:
