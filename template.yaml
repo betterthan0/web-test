@@ -23,7 +23,7 @@ Resources:
       StageName: !Ref stage
 #      OpenApiVersion: '2.0'
       Auth:
-        ApiKeyRequired: true
+        DefaultAuthorizer: AWS_IAM
 
   ProducerFunction:
     Type: AWS::Serverless::Function
