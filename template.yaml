@@ -33,7 +33,7 @@ Resources:
       Description: "CloudFormation API Key"
       Enabled: true
       GenerateDistinctId: false
-      Value: !Sub '{{resolve:ssm:/dropship/${stage}/API_KEY}}'
+      Value: !Sub '{{resolve:ssm:/test/${stage}/API_KEY}}'
       StageKeys:
         - RestApiId: !Ref ApiDeploy
           StageName: !Ref stage
