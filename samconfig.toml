@@ -4,13 +4,13 @@ version = 0.1
 [develop.deploy.parameters]
 stack_name = "dropship-scraping-develop"
 s3_prefix = "dropship-scraping-develop"
-parameter_overrides=["stage=prod"]
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-5yh6e98yptm4"
 region = "eu-central-1"
 confirm_changeset = false
 fail_on_empty_changeset=false
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
+parameter_overrides=["stage=dev"]
 
 [production]
 [production.deploy]

@@ -5,6 +5,8 @@ Description: >
 Globals:
   Function:
     Timeout: 3
+  Api:
+    OpenApiVersion: 3.0.1
 
 Parameters:
   stage:
@@ -15,6 +17,14 @@ Parameters:
       - prod
 
 Resources:
+  ApiDeploy:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref stage
+#      OpenApiVersion: '2.0'
+      Auth:
+        ApiKeyRequired: true
+
   ProducerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -31,7 +41,9 @@ Resources:
       Architectures:
         - x86_64
       Events:
-        ScheduledFunction:
-           Type: Schedule
-           Properties:
-             Schedule: cron(0 00 ? * * *)
+        ApiEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiDeploy
+            Path: /aggregations
+            Method: POST
