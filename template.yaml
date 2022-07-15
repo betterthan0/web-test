@@ -41,10 +41,10 @@ Resources:
   ApiUsagePlan:
     Type: "AWS::ApiGateway::UsagePlan"
     DependsOn:
-      - ApiDeploy.Stage
+      - ApiDeployStage
     Properties:
       ApiStages:
-        - ApiId: !Ref ApiDeploy
+        - ApiId: !Ref ApiDeployStage
           Stage: !Ref stage
       Description: !Join [" ", [{"Ref": "AWS::StackName"}, "usage plan"]]
       UsagePlanName: !Join ["", [{"Ref": "AWS::StackName"}, "-usage-plan"]]
