@@ -15,6 +15,7 @@ Parameters:
     AllowedValues:
       - dev
       - prod
+      - stage
 
 Resources:
   ApiDeploy:
